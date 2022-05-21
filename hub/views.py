@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
+from .models import User
 from django.contrib.auth import authenticate, login, logout
 
 def index(request):
@@ -15,6 +15,8 @@ def signup(request):
         password = request.POST['password']
 
         myuser = User.objects.create_user(username, email, password)
+        myuser.fullname = fname
+        myuser.save()
         return redirect('login')
 
     return render(request, 'hub/authentication/signup.html')
