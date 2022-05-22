@@ -21,10 +21,10 @@ class UserAdmin(BaseUserAdmin):
     form = MyUserChangeForm
     add_form = MyUserCreationForm
     fieldsets = BaseUserAdmin.fieldsets + (
-            ('Custom', {'fields': ('fullname','avatar')}),
+            ('Custom', {'fields': ('fullname','avatar','banner')}),
     )
     add_fieldsets = BaseUserAdmin.add_fieldsets + (
-            ('Custom', {'fields': ('fullname','avatar')}),
+            ('Custom', {'fields': ('fullname','avatar','banner')}),
     )
 
 # Video

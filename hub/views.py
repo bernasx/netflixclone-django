@@ -23,19 +23,29 @@ def signup(request):
     return render(request, 'hub/authentication/signup.html')
 
 def profile(request, pk=None):
+    otherUser = None
+    ownProfile = False
+
+    if (pk == request.user.id):
+        return redirect('profile')  
     if (pk is not None):
-        user = get_object_or_404(User, pk=pk)
-        avatar = user.avatar.url
-        parameters = {'otherUser':user,'isProducer':user.has_perm('hub.add_movie'),'avatar':avatar}
-        return render(request, 'hub/profile.html', parameters)
-    if (request.user.is_authenticated):
-        user = request.user
-        avatar = user.avatar.url
-        parameters = {'avatar':avatar,'isProducer':user.has_perm('hub.add_movie')}
-        return render(request, 'hub/profile.html', parameters)
+        otherUser = get_object_or_404(User, pk=pk)
+    elif (request.user.is_authenticated):
+        otherUser = request.user
+        ownProfile = True
     else:
         return render(request, 'hub/profile.html', {"user":None})
-    
+
+    avatar = otherUser.avatar.url
+    banner = otherUser.banner.url
+    parameters = {'otherUser':otherUser.get_username(),
+    'isProducer':otherUser.has_perm('hub.add_movie'),
+    'avatar':avatar, 
+    'banner':banner,
+    'ownProfile':ownProfile
+    }
+
+    return render(request, 'hub/profile.html', parameters)
         
 
    

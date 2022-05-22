@@ -2,15 +2,16 @@
 
 {% block content %}
 
-{% if user.is_authenticated and not otherUser %}
-    <img class="img-thumbnail" src="{{ avatar }}"/>
+<img class="" src="{{ banner }}"/>
+<img class="img-thumbnail" src="{{ avatar }}"/>
+
+{% if user.is_authenticated and ownProfile %}
     <h3>Hello {{user}}! This is your profile</h3>
 {% endif %}
 
-{% if otherUser %}
-    <img class="img-thumbnail" src="{{ avatar }}"/>
+{% if otherUser and not ownProfile %}
     <h3>You are looking at {{otherUser}}!</h3>
-    {% if isProducer and otherUser != user and user.is_authenticated %}
+    {% if isProducer and user.is_authenticated %}
         <button class='btn btn-primary'>Follow</button>
     {% endif %}
 
