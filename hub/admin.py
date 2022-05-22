@@ -16,14 +16,15 @@ class MyUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
 
+
 class UserAdmin(BaseUserAdmin):
     form = MyUserChangeForm
     add_form = MyUserCreationForm
     fieldsets = BaseUserAdmin.fieldsets + (
-            ('Custom', {'fields': ('fullname',)}),
+            ('Custom', {'fields': ('fullname','avatar')}),
     )
     add_fieldsets = BaseUserAdmin.add_fieldsets + (
-            ('Custom', {'fields': ('fullname',)}),
+            ('Custom', {'fields': ('fullname','avatar')}),
     )
 
 # Video
@@ -54,8 +55,3 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(View, ViewAdmin)
 admin.site.register(Follower,admin.ModelAdmin)
-admin.site.register(Avatar,admin.ModelAdmin)
-admin.site.register(Banner,admin.ModelAdmin)
-admin.site.register(VideoBanner,admin.ModelAdmin)
-admin.site.register(Thumbnail,admin.ModelAdmin)
-admin.site.register(Storyboard,admin.ModelAdmin)

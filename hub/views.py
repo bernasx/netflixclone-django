@@ -25,10 +25,14 @@ def signup(request):
 def profile(request, pk=None):
     if (pk is not None):
         user = get_object_or_404(User, pk=pk)
-        return render(request, 'hub/profile.html', {'otherUser':user,'isProducer':user.has_perm('hub.add_movie')})
+        avatar = user.avatar.url
+        parameters = {'otherUser':user,'isProducer':user.has_perm('hub.add_movie'),'avatar':avatar}
+        return render(request, 'hub/profile.html', parameters)
     if (request.user.is_authenticated):
         user = request.user
-        return render(request, 'hub/profile.html')
+        avatar = user.avatar.url
+        parameters = {'avatar':avatar,'isProducer':user.has_perm('hub.add_movie')}
+        return render(request, 'hub/profile.html', parameters)
     else:
         return render(request, 'hub/profile.html', {"user":None})
     
