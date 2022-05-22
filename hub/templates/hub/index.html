@@ -4,13 +4,7 @@
 
 {% if user.is_authenticated %}
     <h3>Hello {{username}}!</h3>
-    <br/>
-    <br/>
-    <button type="submit"><a href="{% url 'logout' %}">Sign Out</a></button>
 {% else %}
-    <button type="submit"><a href="{% url 'signup' %}">Sign Up</a></button>
-    <br/>
-    <br/>
-    <button type="submit"><a href="{% url 'login' %}">Sign In</a></button>
+    <h3>no account!</h3>
 {% endif %}
 {% endblock %}
