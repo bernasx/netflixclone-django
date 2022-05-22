@@ -50,8 +50,22 @@ class ViewAdmin(admin.ModelAdmin):
         (None,{'fields': ('viewer','video','date')}),
     ]
 
+# Follower 
+class FollowerCreationForm(forms.ModelForm):
+    class Meta:
+        model = Follower
+        fields = '__all__'
+
+class FollowerAdmin(admin.ModelAdmin):
+    add_form = FollowerCreationForm
+    fieldsets = [
+        (None,{'fields': ('producer','follower')}),
+    ]
+
+
+
 # Register your models here.
 admin.site.register(User, UserAdmin)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(View, ViewAdmin)
-admin.site.register(Follower,admin.ModelAdmin)
+admin.site.register(Follower,FollowerAdmin)

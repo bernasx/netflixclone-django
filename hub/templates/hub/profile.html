@@ -12,7 +12,18 @@
 {% if otherUser and not ownProfile %}
     <h3>You are looking at {{otherUser}}!</h3>
     {% if isProducer and user.is_authenticated %}
-        <button class='btn btn-primary'>Follow</button>
+        {% if isFollowing %}
+        <form method="post" action="{% url 'unfollow' %}">
+            {% csrf_token %}
+            <button type="submit" name='id' value={{otherUserId}} class="btn btn-primary">Unfollow</button>
+        </form>
+        {% else %}
+        <form method="post" action="{% url 'follow' %}">
+            {% csrf_token %}
+            <button type="submit" name='id' value={{otherUserId}} class="btn btn-primary">Follow</button>
+        </form>
+        {% endif %}
+   
     {% endif %}
 
 {% elif not user.is_authenticated and not otherUser%}
