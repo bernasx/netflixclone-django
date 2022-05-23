@@ -1,16 +1,18 @@
 {% extends '../base.html'%}
 
 {% block content %}
-<div class="container-fluid">
+{% load static %}
+<link rel="stylesheet" href="{% static 'hub/css/videos.css' %}" type="text/css">
+<div class="container-fluid space-up">
     <div class="row">
     {% for video in videos_list %}
-    <div class="col-lg-2">
-        <div class="card" style="width: 18rem;">
+    <div class="col-lg-2 col-md-4 center-cards">
+        <div class="card custom-card" style="width: 18rem;">
             <img class="card-img-top" src="{{ video.thumbnail.url }}" />
             <div class="card-body">
-                <h5 class="card-title">{{video.title}}</h5>
-                <p class="card-text">{{video.description}}</p>
-                    <a href="{% url 'video_detail' video.id %}">Watch now ></a>
+                <h5 class="card-title card-text-wrap">{{video.title}}</h5>
+                <p class="card-text card-text-wrap">{{video.description}}</p>
+                    <a href="{% url 'video_detail' video.id %}">Watch now ➤</a>
             </div>
         </div>
     </div>

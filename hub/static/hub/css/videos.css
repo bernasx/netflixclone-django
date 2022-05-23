@@ -1,0 +1,38 @@
+.space-up {
+    margin-top: 12px;
+}
+
+.custom-card {
+    height: 400px;
+}
+
+.center-cards {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.card-text-wrap {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+p.card-text-wrap {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 100px;
+}
+
+@media only screen and (min-width: 992px) {
+    .center-cards {
+        display: flex;
+        justify-content: center;
+        margin-top: 0px;
+    }
+}
