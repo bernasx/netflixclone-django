@@ -1,32 +1,77 @@
 {% extends './base.html'%}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'hub/css/profile.css' %}" type="text/css">
+<div class='container-fluid'>
 
-<img class="" src="{{ banner }}"/>
-<img class="img-thumbnail" src="{{ avatar }}"/>
+    <div class="row">
+        <div class="col">
+            <img class="banner img-fluid" src="{{ banner }}" />
+            <div class="pfp-username-container">
+                <img class="img-thumbnail img-fluid pfp" src="{{ avatar }}" />
+                {% if otherUser and not ownProfile %}
+                <h1 class="username-label">{{otherUser}}</h1>
+                {% endif %}
+                {% if user.is_authenticated and ownProfile %}
+                <h1 class="username-label">{{user}}</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 
-{% if user.is_authenticated and ownProfile %}
-    <h3>Hello {{user}}! This is your profile</h3>
-{% endif %}
-
-{% if otherUser and not ownProfile %}
-    <h3>You are looking at {{otherUser}}!</h3>
-    {% if isProducer and user.is_authenticated %}
-        {% if isFollowing %}
-        <form method="post" action="{% url 'unfollow' %}">
-            {% csrf_token %}
-            <button type="submit" name='id' value={{otherUserId}} class="btn btn-primary">Unfollow</button>
-        </form>
-        {% else %}
-        <form method="post" action="{% url 'follow' %}">
-            {% csrf_token %}
-            <button type="submit" name='id' value={{otherUserId}} class="btn btn-primary">Follow</button>
-        </form>
-        {% endif %}
-   
+<div class='container-fluid space-up'>
+    {% if otherUser and not ownProfile %}
+    <div class="row">
+        <div class="col-7 col-lg-3">
+            <h3>Following</h3>
+            <div class="list-group list-group-numbered">
+                {% for follower in followers %}
+                    <a class="list-group-item list-group-item-action " href=" {% url 'profile' follower.producer.id %}">{{follower.producer.username}}</a>
+                {% endfor %}
+                {% if not followers%}
+                    <a class="list-group-item list-group-item-action " href="#"><b>{{otherUser}}</b> does not follow anyone.</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-1 col-lg-7"></div>
+        <div class="col-4 col-lg-2">
+            {% if isProducer and user.is_authenticated %}
+                {% if isFollowing %}
+                <form method="post" action="{% url 'unfollow' %}">
+                    {% csrf_token %}
+                    <button type="submit" name='id' value={{otherUserId}} class="btn btn-primary">Unfollow</button>
+                </form>
+                {% else %}
+                <form method="post" action="{% url 'follow' %}">
+                    {% csrf_token %}
+                    <button type="submit" name='id' value={{otherUserId}} class="btn btn-primary">Follow</button>
+                </form>
+                {% endif %}
+            {% endif %}
+            {% elif not user.is_authenticated and not otherUser%}
+            <h3>Nothing to show</h3>
+        </div>
+    </div>
     {% endif %}
 
-{% elif not user.is_authenticated and not otherUser%}
-    <h3>Nothing to show</h3>
-{% endif %}
-{% endblock %}
+
+    {% if user.is_authenticated and ownProfile %}
+    <div class="row">
+        <div class="col-8 col-lg-3">
+            <h3>Following</h3>
+            <div class="list-group">
+                {% for follower in followers %}
+                    <a class="list-group-item list-group-item-action " href=" {% url 'profile' follower.producer.id %}">{{follower.producer.username}}</a>
+                {% endfor %}
+                {% if not followers%}
+                    <a class="list-group-item list-group-item-action " href="#"><b>You</b> do not follow anyone.</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-4 col-lg-9">
+        </div>
+        {% endif %}
+    </div>
+    {% endblock %}

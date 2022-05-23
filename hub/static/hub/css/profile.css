@@ -1,0 +1,42 @@
+.banner {
+    z-index: -1;
+    width: calc(100vw - 24px);
+}
+
+.pfp-username-container {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    margin-top: -20%;
+    margin-left: 20px;
+}
+
+.pfp {
+    max-width: 256px;
+    max-height: 256px;
+    object-fit: cover;
+}
+
+.username-label{
+    text-shadow: 1px 1px 2px #fff, 0 0 1em #000, 0 0 0.2em #000;
+    color: white;
+}
+
+.space-up {
+    margin-top: 80px;
+}
+
+@media only screen and (min-width: 992px) {
+    .pfp-username-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        margin-top: -15%;
+    }
+
+    .username-label{
+        margin-left: 20px;
+    }
+}

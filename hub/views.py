@@ -54,17 +54,20 @@ def profile(request, pk=None):
     otherUser = None
     ownProfile = False
     isFollowing = False
-    
+    followers = None
+
     if (pk == request.user.id):
+        # redirect to /profile/ if we end up in our own profile
         return redirect('profile')  
     if (pk is not None):
+        # this is the route /profile/1 or similar, someone else's profile
         otherUser = get_object_or_404(User, pk=pk)
     elif (request.user.is_authenticated):
+        # this is the route /profile/ and thus our own profile
         otherUser = request.user
         ownProfile = True
     else:
         return render(request, 'hub/profile.html', {"user":None})
-
     try:  
         if(request.user.follower.get(producer=otherUser)):
             isFollowing = True
@@ -72,7 +75,12 @@ def profile(request, pk=None):
         isFollowing = False
     avatar = otherUser.avatar.url
     banner = otherUser.banner.url
+
+
+    followers = Follower.objects.filter(follower=otherUser)
+    
     parameters = {'otherUser':otherUser.get_username(),
+    'followers':followers,
     'otherUserId':otherUser.id,
     'isProducer':otherUser.has_perm('hub.add_movie'),
     'isFollowing':isFollowing,
