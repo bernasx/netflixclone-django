@@ -1,7 +1,7 @@
 from http.client import HTTPResponse
-from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import User, Follower
+from .models import User, Follower, Video
+from django.db.models import Q
 from django.views import generic
 
 def index(request):
@@ -50,7 +50,6 @@ def unfollow(request):
         except (KeyError, Follower.DoesNotExist):
             return redirect(f'/profile/{id}')
             
-
 def profile(request, pk=None):
     otherUser = None
     ownProfile = False
@@ -84,5 +83,16 @@ def profile(request, pk=None):
 
     return render(request, 'hub/profile.html', parameters)
         
+class VideosView(generic.ListView):
+    template_name = 'hub/videos/videos.html'
+    context_object_name = 'videos_list'
 
-   
+    def get_queryset(self):
+        return Video.objects.filter(isPublic=True)[:20]
+
+class VideoDetailView(generic.DetailView):
+    model = Video
+    template_name = 'polls/video_detail.html'
+
+    def get_queryset(self):
+        return Video.objects.filter(Q(isPublic=True) | Q(isUnlisted=True,isPublic=False))

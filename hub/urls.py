@@ -6,6 +6,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('follow/', views.follow, name='follow'),
     path('unfollow/', views.unfollow, name='unfollow'),
+    path('videos/', views.VideosView.as_view(template_name='hub/videos/videos.html'), name='videos'),
+    path('video/<int:pk>', views.VideoDetailView.as_view(template_name='hub/videos/video_detail.html'), name='video_detail'),
     path('profile/', views.profile, name='profile'),
     path('profile/<int:pk>', views.profile, name='profile'),
     path('signup/', views.signup, name='signup'),

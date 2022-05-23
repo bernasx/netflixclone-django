@@ -29,6 +29,10 @@ class UserAdmin(BaseUserAdmin):
 
 # Video
 # TODO - Add tags,video, thumbnail and banner display to the admin panels for Videos 
+class TagInline(admin.TabularInline):
+    model = Tag
+    extra = 3
+
 class VideoChangeForm(forms.ModelForm):
     duration = forms.IntegerField(help_text='In seconds')
     quality = forms.CharField(help_text='[width]x[height]')
@@ -38,8 +42,9 @@ class VideoChangeForm(forms.ModelForm):
 
 class VideoAdmin(admin.ModelAdmin):
     form = VideoChangeForm
+    inlines = [TagInline]
     fieldsets = [
-        (None,{'fields': ('title', 'producer','quality','duration','description')}),
+        (None,{'fields': ('title', 'producer','quality','duration','description','video')}),
         ('Date information', {'fields': ('publish_date','lastUpdated',)}),
         ('Privacy', {'fields': ('isPublic','isUnlisted',)}),
     ]

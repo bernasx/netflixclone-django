@@ -16,7 +16,7 @@ class Video(models.Model):
     title = models.CharField(max_length=200, default='title')
     producer = models.ForeignKey(User, on_delete=models.CASCADE)
     publish_date = models.DateTimeField()
-    views = models.IntegerField()
+    views = models.IntegerField(default=0)
     description = models.TextField()
     duration = models.IntegerField()
     lastUpdated = models.DateTimeField()

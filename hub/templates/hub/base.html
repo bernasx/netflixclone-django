@@ -22,7 +22,7 @@
                 <a {% if request.resolver_match.url_name == 'index' %}class="nav-link active"{% else %}class="nav-link"{% endif %} aria-current="page" href="{% url 'index' %}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="{% url 'index' %}">Videos</a>
+                <a {% if request.resolver_match.url_name == 'videos' %}class="nav-link active"{% else %}class="nav-link"{% endif %} aria-current="page" href="{% url 'videos' %}">Videos</a>
               </li>
               {% if user.is_authenticated %}
               <li class="nav-item dropdown">
