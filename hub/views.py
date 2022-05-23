@@ -83,16 +83,35 @@ def profile(request, pk=None):
 
     return render(request, 'hub/profile.html', parameters)
         
+def edit_User(request):
+    if request.method == "POST" and request.user.is_authenticated:
+        user = request.user
+        user.username = request.POST['username']
+        user.fullname = request.POST['fname']
+        user.email = request.POST['email']
+        newpassword = request.POST['password']
+        if (newpassword != ''):
+            user.set_password(newpassword)
+            user.save()
+            return redirect('login')
+        else:
+            user.save()
+            return redirect('profile')
+    if request.method == "GET" and request.user.is_authenticated:
+        return render(request, 'hub/edit_user.html')
+
 class VideosView(generic.ListView):
     template_name = 'hub/videos/videos.html'
     context_object_name = 'videos_list'
 
     def get_queryset(self):
-        return Video.objects.filter(isPublic=True)[:20]
+        # TODO - returns the first 20 videos, should maybe change it to order by publishing date???
+        return Video.objects.filter(Q(isPublic=True) | Q(isPublic = False,producer=self.request.user))[:20]
 
 class VideoDetailView(generic.DetailView):
     model = Video
     template_name = 'polls/video_detail.html'
 
     def get_queryset(self):
-        return Video.objects.filter(Q(isPublic=True) | Q(isUnlisted=True,isPublic=False))
+        # Query where it returns the video if it is public, if it is unlisted or if it is your own video
+        return Video.objects.filter(Q(isPublic=True) | Q(isUnlisted=True) |Q(isPublic = False,producer=self.request.user))

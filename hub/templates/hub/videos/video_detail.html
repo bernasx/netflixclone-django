@@ -2,4 +2,7 @@
 
 {% block content %}
     {{video.title}}
+    <video width="320" height="240" controls class="" >
+        <source src="{{ video.video.url }}" type="video/mp4">
+    </video>
 {% endblock %}
