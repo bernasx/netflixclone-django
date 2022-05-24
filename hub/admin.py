@@ -44,7 +44,8 @@ class VideoAdmin(admin.ModelAdmin):
     form = VideoChangeForm
     inlines = [TagInline]
     fieldsets = [
-        (None,{'fields': ('title', 'producer','quality','duration','description','video')}),
+        (None,{'fields': ('title', 'producer','quality','duration','description')}),
+        ('Media', {'fields': ('video','thumbnail','banner')}),
         ('Date information', {'fields': ('publish_date','lastUpdated',)}),
         ('Privacy', {'fields': ('isPublic','isUnlisted',)}),
     ]

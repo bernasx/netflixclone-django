@@ -29,6 +29,11 @@ p.card-text-wrap {
     height: 100px;
 }
 
+.img-height{
+    height: 190px;
+    object-fit: cover;
+}
+
 @media only screen and (min-width: 992px) {
     .center-cards {
         display: flex;

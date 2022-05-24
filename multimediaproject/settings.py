@@ -131,6 +131,7 @@ LOGIN_REDIRECT_URL = '/'
 
 #Auth
 AUTH_USER_MODEL = 'hub.User'
+LOGIN_URL = '/login/'
 
 # MEDIA
 MEDIA_ROOT = 'F:\ProgramingProjects\django\multimediaproject'

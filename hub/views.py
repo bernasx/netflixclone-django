@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Follower, Video
 from django.db.models import Q
 from django.views import generic
+from django.contrib.auth.decorators import login_required
+import datetime
 
 def index(request):
     username = request.user.username
@@ -49,7 +51,8 @@ def unfollow(request):
             return redirect(f'/profile/{id}')
         except (KeyError, Follower.DoesNotExist):
             return redirect(f'/profile/{id}')
-            
+
+@login_required              
 def profile(request, pk=None):
     otherUser = None
     ownProfile = False
@@ -90,7 +93,8 @@ def profile(request, pk=None):
     }
 
     return render(request, 'hub/profile.html', parameters)
-        
+
+@login_required     
 def edit_User(request):
     if request.method == "POST" and request.user.is_authenticated:
         user = request.user
@@ -114,12 +118,23 @@ class VideosView(generic.ListView):
 
     def get_queryset(self):
         # TODO - returns the first 20 videos, should maybe change it to order by publishing date???
-        return Video.objects.filter(Q(isPublic=True) | Q(isPublic = False,producer=self.request.user))[:20]
+        if(self.request.user.is_authenticated):
+            return Video.objects.filter(Q(isPublic=True) | Q(isPublic = False,producer=self.request.user))[:20]
+        else:
+            return Video.objects.filter(isPublic=True)[:20]
 
 class VideoDetailView(generic.DetailView):
     model = Video
     template_name = 'polls/video_detail.html'
 
     def get_queryset(self):
-        # Query where it returns the video if it is public, if it is unlisted or if it is your own video
-        return Video.objects.filter(Q(isPublic=True) | Q(isUnlisted=True) |Q(isPublic = False,producer=self.request.user))
+        if(self.request.user.is_authenticated):
+            # Query where it returns the video if it is public, if it is unlisted or if it is your own video
+            return Video.objects.filter(Q(isPublic=True) | Q(isUnlisted=True) |Q(isPublic = False,producer=self.request.user))
+        else:
+            return Video.objects.filter(Q(isPublic=True) | Q(isUnlisted=True))
+    
+    def get_context_data(self, **kwargs):
+        context = super(VideoDetailView, self).get_context_data(**kwargs)
+        context['durationDelta'] = str(datetime.timedelta(seconds=self.object.duration))
+        return context

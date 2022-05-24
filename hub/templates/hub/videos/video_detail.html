@@ -1,8 +1,48 @@
 {% extends '../base.html'%}
 
 {% block content %}
-    {{video.title}}
-    <video width="320" height="240" controls class="" >
-        <source src="{{ video.video.url }}" type="video/mp4">
-    </video>
+{% load static %}
+<link rel="stylesheet" href="{% static 'hub/css/video_detail.css' %}" type="text/css">
+<div class='container-fluid space-up'>
+    <div class='row'>
+        <div class='col max-video-width'>
+            <div class='videoWrapper'>
+                <video controls class='video' >
+                    <source src="{{ video.video.url }}" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+    <div class='row space-up'>
+        <hr class="py-1">
+        <div class='col-7 col-lg-9'>
+            <h1 class="display-5">{{video.title}}</h1>
+        </div>
+        <div class="col-1 col-lg-1"></div>
+        <div class='col-4 col-lg-2'>
+            <button class='btn btn-primary'>Test Button</button>
+        </div>
+    </div>
+    <div class='row info-row'>
+        <div class='col-md-3 col-lg-1'>
+            <h1 class="h6 text-secondary">{{video.producer}}</h1>
+        </div>
+        <div class='col-md-3 col-lg-1'>
+            <h1 class="h6 text-secondary">{{durationDelta}}</h1>
+        </div>
+        <div class='col-md-3 col-lg-1'>
+            <h1 class="h6 text-secondary">{{video.views}} views</h1>
+        </div>
+        <div class='col-md-3 col-lg-2'>
+            <h1 class="h6 text-secondary">{{video.publish_date}}</h1>
+        </div>
+    </div>
+
+    <div class='row info-row'>
+        <div class='col-10'>
+            <p class="text-secondary">{{video.description}} </p>
+        </div>
+    </div>
+</div>
+   
 {% endblock %}
