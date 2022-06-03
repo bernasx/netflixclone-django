@@ -7,8 +7,15 @@ from django.contrib.auth.decorators import login_required
 import datetime
 
 def index(request):
-    username = request.user.username
-    return render(request, 'hub/index.html',{"username":username})
+    producers = []
+    publicVideos = Video.objects.filter(isPublic=True)[:3]
+    user = request.user
+    if(user.is_authenticated):
+        following = Follower.objects.filter(follower=user)
+        for follow in following:
+            producers.append(follow.producer)
+
+    return render(request, 'hub/index.html', {"producers": producers[:3], "publicVideos":publicVideos})
 
 def signup(request):
     if request.method == "POST":
