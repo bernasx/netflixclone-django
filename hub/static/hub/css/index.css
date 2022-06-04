@@ -2,6 +2,21 @@
         height:140px;
 }
 
+.img-height{
+    height: 170px;
+    object-fit: cover;
+}
+
+.card-text-wrap {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 80px;
+}
+
+
 @media only screen and (min-width: 992px) {
     .banner-height {
         height:450px;

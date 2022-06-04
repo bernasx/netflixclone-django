@@ -3,7 +3,7 @@
 }
 
 .custom-card {
-    height: 400px;
+    height: 410px;
 }
 
 .center-cards {
@@ -36,8 +36,6 @@ p.card-text-wrap {
 
 @media only screen and (min-width: 992px) {
     .center-cards {
-        display: flex;
-        justify-content: center;
         margin-top: 0px;
     }
 }

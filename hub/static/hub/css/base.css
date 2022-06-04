@@ -1,0 +1,15 @@
+.center-cards {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+@media only screen and (min-width: 992px) {
+    .login-margin{
+        margin-right: 10px;
+    }
+
+    .center-cards {
+        margin-top: 0px;
+    }
+}

@@ -8,12 +8,14 @@ import datetime
 
 def index(request):
     producers = []
-    publicVideos = Video.objects.filter(isPublic=True)[:3]
+    publicVideos = Video.objects.filter(isPublic=True)[:5]
     user = request.user
+    # gets all the producers that this user follows
     if(user.is_authenticated):
         following = Follower.objects.filter(follower=user)
         for follow in following:
-            producers.append(follow.producer)
+            if(len(follow.producer.video_set.all()) > 0):
+                producers.append(follow.producer)
 
     return render(request, 'hub/index.html', {"producers": producers[:3], "publicVideos":publicVideos})
 
@@ -145,3 +147,9 @@ class VideoDetailView(generic.DetailView):
         context = super(VideoDetailView, self).get_context_data(**kwargs)
         context['durationDelta'] = str(datetime.timedelta(seconds=self.object.duration))
         return context
+
+    def get_object(self, queryset=None):
+        item = super().get_object(queryset)
+        item.views += 1
+        item.save()
+        return item

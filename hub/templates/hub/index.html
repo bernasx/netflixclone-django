@@ -29,18 +29,48 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
-  </div>
+</div>
 
-    {% if user.is_authenticated %}
-    <h3>Hello {{user}}!</h3>
-        {% for producer in producers%}
-            <h1>{{producer.username}}</h1>
-            {% for video in producer.video_set.all%}
-                <p>{{video.title}}</p>
+<div class="container-fluid mt-4">
+        <div class="row"> 
+            <h1 class="display-6">You should try</h1>
+        </div>
+        <div class="row">
+            {% for video in publicVideos%}
+                {% if video.isUnlisted == False%}
+                <div class="col-lg-2 center-cards">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{video.thumbnail.url}}" class="card-img-top img-height" alt="{{video.title}} thumbnail"/>
+                        <div class="card-body"> 
+                            <h5 class="card-title card-text-wrap">{{video.title}}</h5>
+                            <a href="{% url 'video_detail' video.id %}" class="btn btn-primary">Watch Now</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             {% endfor %}
-        {% endfor %}
-    {% else %}
-    <h3>no account!</h3>
-    {% endif %}
-
+        </div>
+        {% if user.is_authenticated %}
+            {% for producer in producers%}
+            <div class="row"> 
+                <h1 class="display-6 mt-2">More from {{producer.username}}</h1>
+            </div>
+            <div class="row">
+                {% for video in producer.video_set.all%}
+                    {% if video.isPublic == True and video.isUnlisted == False%}
+                        <div class="col-lg-2 center-cards">
+                            <div class="card" style="width: 18rem;">
+                                <img src="{{video.thumbnail.url}}" class="card-img-top img-height" alt="{{video.title}} thumbnail"/>
+                                <div class="card-body"> 
+                                    <h5 class="card-title card-text-wrap">{{video.title}}</h5>
+                                    <a href="{% url 'video_detail' video.id %}" class="btn btn-primary">Watch Now </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endfor %}
+        {% endif %}
+</div>
 {% endblock %}
