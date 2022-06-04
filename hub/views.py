@@ -8,7 +8,7 @@ import datetime
 
 def index(request):
     producers = []
-    publicVideos = Video.objects.filter(isPublic=True)[:5]
+    publicVideos = Video.objects.filter(isPublic=True)[:5] # keep this at 5, changing this means changing the banner
     user = request.user
     # gets all the producers that this user follows
     if(user.is_authenticated):
