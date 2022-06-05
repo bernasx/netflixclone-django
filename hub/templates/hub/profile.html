@@ -4,7 +4,6 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'hub/css/profile.css' %}" type="text/css">
 <div class='container-fluid'>
-
     <div class="row">
         <div class="col">
             <img class="banner img-fluid" src="{{ banner }}" />
@@ -21,57 +20,78 @@
     </div>
 </div>
 
-<div class='container-fluid space-up'>
+<div class='container-fluid space-up mb-4'>
     {% if otherUser and not ownProfile %}
-    <div class="row">
-        <div class="col-7 col-lg-3">
-            <h3>Following</h3>
-            <div class="list-group">
-                {% for follower in followers %}
-                    <a class="list-group-item list-group-item-action " href=" {% url 'profile' follower.producer.id %}">{{follower.producer.username}}</a>
-                {% endfor %}
-                {% if not followers%}
-                    <a class="list-group-item list-group-item-action " href="#"><strong>{{otherUser}}</strong> does not follow anyone.</a>
-                {% endif %}
+        <div class="row">
+            <div class="col-7 col-lg-3">
+                <h3>Following</h3>
+                <div class="list-group">
+                    {% for follower in followers %}
+                        <a class="list-group-item list-group-item-action " href=" {% url 'profile' follower.producer.id %}">{{follower.producer.username}}</a>
+                    {% endfor %}
+                    {% if not followers%}
+                        <a class="list-group-item list-group-item-action " href="#"><strong>{{otherUser}}</strong> does not follow anyone.</a>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-        <div class="col-1 col-lg-7"></div>
+
+    <div class="col-1 col-lg-7"></div>
         <div class="col-4 col-lg-2">
             {% if isProducer and user.is_authenticated %}
                 {% if isFollowing %}
-                <form method="post" action="{% url 'unfollow' %}">
-                    {% csrf_token %}
-                    <button type="submit" name='id' value={{otherUserId}} class="btn btn-primary">Unfollow</button>
-                </form>
+                    <form method="post" action="{% url 'unfollow' %}">
+                        {% csrf_token %}
+                        <button type="submit" name='id' value={{otherUserId}} class="btn btn-primary">Unfollow</button>
+                    </form>
                 {% else %}
-                <form method="post" action="{% url 'follow' %}">
-                    {% csrf_token %}
-                    <button type="submit" name='id' value={{otherUserId}} class="btn btn-primary">Follow</button>
-                </form>
-                {% endif %}
+                    <form method="post" action="{% url 'follow' %}">
+                        {% csrf_token %}
+                        <button type="submit" name='id' value={{otherUserId}} class="btn btn-primary">Follow</button>
+                    </form>
+                {% endif %} 
             {% endif %}
-            {% elif not user.is_authenticated and not otherUser%}
-            <h3>Nothing to show</h3>
         </div>
-    </div>
+    </div>   
+
+        {% if isProducer and user.is_authenticated %}  
+            {% if otherUser.video_set.all %}
+                <div class="row"> 
+                    <h3 class="mt-2">{{otherUser}} Videos</h3>
+                </div>
+            {% endif %}
+            <div class="row">
+                {% for video in otherUser.video_set.all%}
+                    {% if video.isPublic %}
+                    <div class="col-lg-2 center-cards">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{video.thumbnail.url}}" class="card-img-top img-height" alt="{{video.title}} thumbnail"/>
+                            <div class="card-body"> 
+                                <h5 class="card-title card-text-wrap">{{video.title}}</h5>
+                                <a href="{% url 'video_detail' video.id %}" class="btn btn-primary">Watch Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
     {% endif %}
 
 
     {% if user.is_authenticated and ownProfile %}
-    <div class="row">
-        <div class="col-8 col-lg-3">
-            <h3>Following</h3>
-            <div class="list-group">
-                {% for follower in followers %}
-                    <a class="list-group-item list-group-item-action " href=" {% url 'profile' follower.producer.id %}">{{follower.producer.username}}</a>
-                {% endfor %}
-                {% if not followers%}
-                    <a class="list-group-item list-group-item-action " href="#"><b>You</b> do not follow anyone.</a>
-                {% endif %}
+        <div class="row">
+            <div class="col-8 col-lg-3">
+                <h3>Following</h3>
+                <div class="list-group">
+                    {% for follower in followers %}
+                        <a class="list-group-item list-group-item-action " href=" {% url 'profile' follower.producer.id %}">{{follower.producer.username}}</a>
+                    {% endfor %}
+                    {% if not followers%}
+                        <a class="list-group-item list-group-item-action " href="#"><b>You</b> do not follow anyone.</a>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-        <div class="col-4 col-lg-9">
-        </div>
-        {% endif %}
-    </div>
-    {% endblock %}
+            <div class="col-4 col-lg-9"></div>
+    {% endif %}
+</div>
+{% endblock %}

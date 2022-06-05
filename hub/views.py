@@ -91,7 +91,7 @@ def profile(request, pk=None):
 
     followers = Follower.objects.filter(follower=otherUser)
     
-    parameters = {'otherUser':otherUser.get_username(),
+    parameters = {'otherUser':otherUser,
     'followers':followers,
     'otherUserId':otherUser.id,
     'isProducer':otherUser.has_perm('hub.add_movie'),
@@ -149,7 +149,7 @@ class VideoDetailView(generic.DetailView):
         return context
 
     def get_object(self, queryset=None):
-        item = super().get_object(queryset)
-        item.views += 1
-        item.save()
-        return item
+        video = super().get_object(queryset)
+        video.views += 1
+        video.save()
+        return video

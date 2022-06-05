@@ -33,9 +33,9 @@
     </button>
 </div>
 
-<div class="container-fluid mt-4">
+<div class="container-fluid mb-4">
         <div class="row"> 
-            <h1 class="display-6">You should try</h1>
+            <h1 class="display-6 mt-4">You should try</h1>
         </div>
         <div class="row">
             {% for video in publicVideos%}
@@ -55,7 +55,7 @@
         {% if user.is_authenticated %}
             {% for producer in producers%}
             <div class="row"> 
-                <h1 class="display-6 mt-2">More from {{producer.username}}</h1>
+                <h1 class="display-6 mt-4">More from {{producer.username}}</h1>
             </div>
             <div class="row">
                 {% for video in producer.video_set.all%}
