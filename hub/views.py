@@ -1,9 +1,10 @@
 from http.client import HTTPResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import User, Follower, Video
+from .models import User, Follower, Video, View
 from django.db.models import Q
 from django.views import generic
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 import datetime
 
 def index(request):
@@ -67,6 +68,7 @@ def profile(request, pk=None):
     ownProfile = False
     isFollowing = False
     followers = None
+    views = None
 
     if (pk == request.user.id):
         # redirect to /profile/ if we end up in our own profile
@@ -78,6 +80,7 @@ def profile(request, pk=None):
         # this is the route /profile/ and thus our own profile
         otherUser = request.user
         ownProfile = True
+        views = View.objects.filter(viewer=otherUser).order_by('-date')[:5]
     else:
         return render(request, 'hub/profile.html', {"user":None})
     try:  
@@ -92,6 +95,7 @@ def profile(request, pk=None):
     followers = Follower.objects.filter(follower=otherUser)
     
     parameters = {'otherUser':otherUser,
+    'views':views,
     'followers':followers,
     'otherUserId':otherUser.id,
     'isProducer':otherUser.has_perm('hub.add_movie'),
@@ -150,6 +154,17 @@ class VideoDetailView(generic.DetailView):
 
     def get_object(self, queryset=None):
         video = super().get_object(queryset)
+
         video.views += 1
+
+        # check if there's a view with this user and this video, if true, change the date to now
+        try:
+            view = View.objects.get(viewer=self.request.user,video= video)
+            if(view):
+                view.date = timezone.now()
+                view.save()
+        except(KeyError, View.DoesNotExist):
+            view = View(viewer= self.request.user, video=video, date=timezone.now())
+            view.save()
         video.save()
         return video
