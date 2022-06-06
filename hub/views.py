@@ -115,6 +115,11 @@ def edit_User(request):
         user.fullname = request.POST['fname']
         user.email = request.POST['email']
         newpassword = request.POST['password']
+        checks = request.POST.getlist('checks')
+        if('wipeViewHistory' in checks):
+            views = View.objects.filter(viewer=user)
+            views.delete()
+
         if (newpassword != ''):
             user.set_password(newpassword)
             user.save()
@@ -122,6 +127,7 @@ def edit_User(request):
         else:
             user.save()
             return redirect('profile')
+            
     if request.method == "GET" and request.user.is_authenticated:
         return render(request, 'hub/edit_user.html')
 
