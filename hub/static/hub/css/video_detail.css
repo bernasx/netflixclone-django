@@ -22,6 +22,11 @@
     height: 100%;
 }
 
+.storyboard-container{
+    padding: 10px 0px;
+    background-color: rgb(230, 230, 236);
+}
+
 @media only screen and (min-width: 992px) {
     .info-row {
         padding-left: 2px;

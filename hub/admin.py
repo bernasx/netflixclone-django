@@ -45,7 +45,7 @@ class VideoAdmin(admin.ModelAdmin):
     inlines = [TagInline]
     fieldsets = [
         (None,{'fields': ('title', 'producer','quality','duration','description')}),
-        ('Media', {'fields': ('video','thumbnail','banner')}),
+        ('Media', {'fields': ('video','thumbnail','banner','storyboard')}),
         ('Date information', {'fields': ('publish_date','lastUpdated',)}),
         ('Privacy', {'fields': ('isPublic','isUnlisted',)}),
     ]
