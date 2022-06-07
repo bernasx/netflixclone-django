@@ -1,6 +1,10 @@
+.custom-container {
+    height: 450px;
+}
 .banner {
     z-index: -1;
-    width: calc(100vw - 24px);
+    width: 100vw;
+    height: 300px;
 }
 
 .pfp-username-container {
@@ -48,12 +52,25 @@
 }
 
 @media only screen and (min-width: 992px) {
+    .banner {
+        z-index: -1;
+        width: 100vw;
+        height: 450px;
+        object-fit: cover;
+    }
+
+    .pfp {
+        width: 256px;
+        height: 256px;
+        object-fit: cover;
+    }
+
     .pfp-username-container {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: start;
-        margin-top: -15%;
+        margin-top: -300px;
     }
 
     .username-label{

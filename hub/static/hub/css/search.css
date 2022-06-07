@@ -1,0 +1,41 @@
+.custom-card {
+    height: 410px;
+}
+
+.custom-card-user {
+    height: 300px;
+}
+
+.center-cards {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.card-text-wrap {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+p.card-text-wrap {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 100px;
+}
+
+.img-height{
+    height: 190px;
+    object-fit: cover;
+}
+
+@media only screen and (min-width: 992px) {
+    .center-cards {
+        margin-top: 0px;
+    }
+}

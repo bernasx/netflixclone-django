@@ -1,6 +1,7 @@
 from http.client import HTTPResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Follower, Video, View
+from .forms import UserEditForm
 from django.db.models import Q
 from django.views import generic
 from django.contrib.auth.decorators import login_required
@@ -110,15 +111,28 @@ def profile(request, pk=None):
 @login_required     
 def edit_User(request):
     if request.method == "POST" and request.user.is_authenticated:
+        
         user = request.user
         user.username = request.POST['username']
-        user.fullname = request.POST['fname']
+        user.fullname = request.POST['fullname']
         user.email = request.POST['email']
         newpassword = request.POST['password']
         checks = request.POST.getlist('checks')
         if('wipeViewHistory' in checks):
             views = View.objects.filter(viewer=user)
             views.delete()
+
+        try:
+            if (request.FILES['avatar']):
+                user.avatar = request.FILES['avatar']
+        except:
+            pass
+
+        try:
+            if (request.FILES['banner']):
+                user.banner = request.FILES['banner']
+        except:
+            pass
 
         if (newpassword != ''):
             user.set_password(newpassword)
@@ -130,6 +144,14 @@ def edit_User(request):
             
     if request.method == "GET" and request.user.is_authenticated:
         return render(request, 'hub/edit_user.html')
+
+def search(request):
+    if(request.method == 'GET'):
+        searchterm = request.GET['search']
+        videos = Video.objects.filter(title__icontains=searchterm)
+        users = User.objects.filter(username__icontains=searchterm)
+        parameters = {'videos':videos,'users':users}
+        return render(request, 'hub/search.html', parameters)
 
 class VideosView(generic.ListView):
     template_name = 'hub/videos/videos.html'

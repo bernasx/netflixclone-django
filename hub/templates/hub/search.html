@@ -1,0 +1,42 @@
+{% extends './base.html'%}
+{% block content %}
+{% load static%}
+<link rel="stylesheet" href="{% static 'hub/css/search.css' %}" type="text/css">
+<div class="container-fluid mt-4">
+    <div>
+        <h1 class="display-6">Videos Found</h1>
+    </div>
+    <div class="row">
+        {%for video in videos%}
+        <div class="col-6 col-lg-2 col-md-4 center-cards">
+            <div class="card custom-card" style="width: 18rem;">
+                <img class="card-img-top img-height" src="{{ video.thumbnail.url }}" />
+                <div class="card-body">
+                    <h5 class="card-title card-text-wrap">{{video.title}}</h5>
+                    <p class="card-text card-text-wrap">{{video.description}}</p>
+                    <a href="{% url 'video_detail' video.id %}" class="btn btn-primary">Watch Now </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div>
+        <h1 class="display-6">Users Found</h1>
+    </div>
+    <div class="row">
+        {%for user in users%}
+        <div class="col-6 col-lg-2 col-md-4 center-cards">
+            <div class="card custom-card-user" style="width: 18rem;">
+                <img class="card-img-top img-height" src="{{ user.avatar.url }}" />
+                <div class="card-body">
+                    <h5 class="card-title card-text-wrap">{{user.username}}</h5>
+                    <a href="{% url 'profile' user.id %}" class="btn btn-primary">Go to profile</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

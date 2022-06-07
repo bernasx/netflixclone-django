@@ -47,11 +47,11 @@
             </ul>
             {% if user.is_authenticated %}
               <span class="navbar-text login-margin">
-                Logged in as {{user}}
+                Logged in as <span class="text-white">{{user}}</span>
               </span>
             {% endif %}
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="d-flex" role="search" method="get" action="{% url 'search' %}">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
           </div>

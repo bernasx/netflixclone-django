@@ -18,5 +18,8 @@ h4 {
     #fname {
         width: 15%;
     }
+    .image-input {
+        width: 40%; 
+    }
 }
 

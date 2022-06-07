@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('search/', views.search, name='search'),
     path('follow/', views.follow, name='follow'),
     path('unfollow/', views.unfollow, name='unfollow'),
     path('videos/', views.VideosView.as_view(template_name='hub/videos/videos.html'), name='videos'),

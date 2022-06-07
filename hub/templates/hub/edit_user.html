@@ -5,15 +5,15 @@
 <div class="container-fluid">
     <h4 class="mt-3">Edit your account!</h4>
     <hr>
-    <form method="post" action="{% url 'edit_user' %}">
+    <form method="post" action="{% url 'edit_user' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control" value="{{user.username}}" id="username" name="username" placeholder="Edit your username (use only letters and numbers)" Required>
           </div>
           <div class="mb-3">
-            <label for="fname" class="form-label">Full Name</label>
-            <input type="text" class="form-control" value="{{user.fullname}}" id="fname" name="fname" placeholder="Enter Your Full Name" Required>
+            <label for="fullname" class="form-label">Full Name</label>
+            <input type="text" class="form-control" value="{{user.fullname}}" id="fullname" name="fullname" placeholder="Enter Your Full Name" Required>
           </div>
 
         <div class="mb-3">
@@ -26,6 +26,16 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="New Password" autocomplete="off" value="" aria-describedby="passwordHelp" >
             <div id="passwordHelp" class="form-text">Leave Blank to keep unchanged</div>
+          </div>
+
+          <div class="input-group mb-3 image-input" >
+            <label class="input-group-text" for="avatar">Avatar</label>
+            <input type="file" class="form-control" id="avatar" name="avatar">
+          </div>
+
+          <div class="input-group mb-3 image-input">
+            <label class="input-group-text" for="avatar">Banner</label>
+            <input type="file" class="form-control" id="banner" name="banner">
           </div>
 
           <div class="form-check">

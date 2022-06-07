@@ -3,24 +3,20 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'hub/css/profile.css' %}" type="text/css">
-<div class='container-fluid'>
-    <div class="row">
-        <div class="col">
-            <img class="banner img-fluid" src="{{ banner }}" />
-            <div class="pfp-username-container">
-                <img class="img-thumbnail img-fluid pfp" src="{{ avatar }}" />
-                {% if otherUser and not ownProfile %}
-                <h1 class="username-label">{{otherUser}}</h1>
-                {% endif %}
-                {% if user.is_authenticated and ownProfile %}
-                <h1 class="username-label">{{user}}</h1>
-                {% endif %}
-            </div>
-        </div>
+<div class='custom-container'>
+    <img class="banner img-fluid" src="{{ banner }}" />
+    <div class="pfp-username-container">
+        <img class="img-thumbnail img-fluid pfp" src="{{ avatar }}" />
+        {% if otherUser and not ownProfile %}
+        <h1 class="username-label">{{otherUser}}</h1>
+        {% endif %}
+        {% if user.is_authenticated and ownProfile %}
+        <h1 class="username-label">{{user}}</h1>
+        {% endif %}
     </div>
 </div>
 
-<div class='container-fluid space-up mb-4'>
+<div class='container-fluid space-up mb-4 mt-2'>
     {% if otherUser and not ownProfile %}
         <div class="row">
             <div class="col-7 col-lg-3">
