@@ -3,6 +3,7 @@
 {% load static%}
 <link rel="stylesheet" href="{% static 'hub/css/search.css' %}" type="text/css">
 <div class="container-fluid mt-4">
+    {%if videos%}
     <div>
         <h1 class="display-6">Videos Found</h1>
     </div>
@@ -20,7 +21,9 @@
         </div>
         {% endfor %}
     </div>
+    {%endif%}
 
+    {%if users%}
     <div>
         <h1 class="display-6">Users Found</h1>
     </div>
@@ -37,6 +40,11 @@
         </div>
         {% endfor %}
     </div>
+    {%endif%}
+
+    {% if not users and not videos%}
+        <h1 class="display-6">Nothing found!</h1>
+    {%endif%}
 
 </div>
 {% endblock %}

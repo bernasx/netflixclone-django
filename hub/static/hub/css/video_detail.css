@@ -27,6 +27,13 @@
     background-color: rgb(230, 230, 236);
 }
 
+.no-decoration{
+    text-decoration: none;
+}
+.no-decoration:hover{
+    color: lightgray;
+}
+
 @media only screen and (min-width: 992px) {
     .info-row {
         padding-left: 2px;

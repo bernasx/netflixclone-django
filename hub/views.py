@@ -148,7 +148,7 @@ def edit_User(request):
 def search(request):
     if(request.method == 'GET'):
         searchterm = request.GET['search']
-        videos = Video.objects.filter(title__icontains=searchterm)
+        videos = Video.objects.filter(Q(title__icontains=searchterm) | Q(tag__tag__icontains=searchterm) | Q(producer__username__icontains=searchterm)).distinct()
         users = User.objects.filter(username__icontains=searchterm)
         parameters = {'videos':videos,'users':users}
         return render(request, 'hub/search.html', parameters)
@@ -176,6 +176,7 @@ class VideoDetailView(generic.DetailView):
             return Video.objects.filter(Q(isPublic=True) | Q(isUnlisted=True))
     
     def get_context_data(self, **kwargs):
+        # get duration from seconds
         context = super(VideoDetailView, self).get_context_data(**kwargs)
         context['durationDelta'] = str(datetime.timedelta(seconds=self.object.duration))
         return context

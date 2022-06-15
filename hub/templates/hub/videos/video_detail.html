@@ -40,6 +40,14 @@
         </div>
     </div>
 
+    <div class='row info-row justify-content-start mt-2 mb-2'>
+        {% for tag in video.tag_set.all %}
+        <div class="col-auto">
+            <a href="{% url 'search' %}?search={{tag.tag}}" class="badge badge-pill bg-dark no-decoration">{{tag.tag}}</a>
+        </div>
+        {%endfor%}
+    </div>
+
     <div class='row info-row'>
         <div class='col-10'>
             <p class="text-secondary">{{video.description}} </p>
