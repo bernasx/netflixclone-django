@@ -99,7 +99,7 @@ def profile(request, pk=None):
     'views':views,
     'followers':followers,
     'otherUserId':otherUser.id,
-    'isProducer':otherUser.has_perm('hub.add_movie'),
+    'isProducer':otherUser.has_perm('hub.add_video'),
     'isFollowing':isFollowing,
     'avatar':avatar, 
     'banner':banner,
