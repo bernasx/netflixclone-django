@@ -10,7 +10,7 @@ Clone this repo and navigate to the root directory, use the following commands:
 
 Create the folder structure:
 ```
-hub
+project
 │
 │───uploads
 │   │
