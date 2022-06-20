@@ -1,10 +1,7 @@
-from datetime import datetime
-from email.policy import default
-from fileinput import filename
 from django.db import models
-
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+
 class User(AbstractUser):
     fullname = models.CharField(max_length=200, default='fullname')
     avatar = models.ImageField(upload_to='uploads/avatars/', default='uploads/avatars/default.png', blank=True)

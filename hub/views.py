@@ -1,7 +1,6 @@
 from http.client import HTTPResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Follower, Video, View
-from .forms import UserEditForm
 from django.db.models import Q
 from django.views import generic
 from django.contrib.auth.decorators import login_required
@@ -158,7 +157,6 @@ class VideosView(generic.ListView):
     context_object_name = 'videos_list'
 
     def get_queryset(self):
-        # TODO - returns the first 20 videos, should maybe change it to order by publishing date???
         if(self.request.user.is_authenticated):
             return Video.objects.filter(Q(isPublic=True) | Q(isPublic = False,producer=self.request.user))[:20]
         else:
