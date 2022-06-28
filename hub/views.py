@@ -181,9 +181,13 @@ class VideoDetailView(generic.DetailView):
 
     def get_object(self, queryset=None):
         video = super().get_object(queryset)
+        if(not self.request.user.is_authenticated):
+            video.views += 1
+            video.save()
+            return video
+        
 
         video.views += 1
-
         # check if there's a view with this user and this video, if true, change the date to now
         try:
             view = View.objects.get(viewer=self.request.user,video= video)
