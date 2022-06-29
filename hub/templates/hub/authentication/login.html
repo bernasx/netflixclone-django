@@ -2,9 +2,19 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'hub/css/userforms.css' %}" type="text/css">
+
+<style>
+  .btn-primary {
+  --bs-btn-hover-bg: #884A9D;
+  --bs-btn-bg: #9C68AD;
+  --bs-btn-border-color: #9C68AD;
+  --bs-btn-hover-border-color: #884A9D;
+}
+</style>
+
 <div class="container-fluid">
-    <h4 class="mt-3">Login to your account!</h4>
-    <hr>
+    <h4 class="mt-3" style="color: white;">Login to your account!</h4>
+    <hr style="color: #B086BE;">
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <div class="mb-3">

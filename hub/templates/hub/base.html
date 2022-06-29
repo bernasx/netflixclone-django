@@ -8,8 +8,27 @@
     <!--Css Style -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'hub/css/base.css' %}" type="text/css">
+
+    <style>
+      .navbar {
+        --bs-navbar-padding-y: 0;
+      }
+      .nav-item :hover{
+        color: #9C68AD;
+      }
+      .btn-outline-success {
+       --bs-btn-hover-bg: #884A9D;
+       --bs-btn-color: #9C68AD;
+       --bs-btn-border-color: #9C68AD;
+       --bs-btn-hover-border-color: #884A9D;
+      }
+      .dropdown-menu-dark {
+        --bs-dropdown-divider-bg: #9C68AD;
+        --bs-dropdown-link-hover-color: #9C68AD;
+      }
+    </style>
   </head>
-  <body>
+  <body style="background-color: #121212; color: white;">
     <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="{% url 'index' %}">
@@ -21,17 +40,17 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a {% if request.resolver_match.url_name == 'index' %}class="nav-link active"{% else %}class="nav-link"{% endif %} aria-current="page" href="{% url 'index' %}">Home</a>
+                <a {% if request.resolver_match.url_name == 'index' %}class="nav-link active" style="color: #9C68AD; font-weight: 700;"{% else %}class="nav-link"{% endif %} aria-current="page" href="{% url 'index' %}">Home</a>
               </li>
               <li class="nav-item">
-                <a {% if request.resolver_match.url_name == 'videos' %}class="nav-link active"{% else %}class="nav-link"{% endif %} aria-current="page" href="{% url 'videos' %}">Videos</a>
+                <a {% if request.resolver_match.url_name == 'videos' %}class="nav-link active" style="color: #9C68AD; font-weight: 700;"{% else %}class="nav-link"{% endif %} aria-current="page" href="{% url 'videos' %}">Videos</a>
               </li>
               {% if user.is_authenticated %}
               <li class="nav-item dropdown">
-                <a {% if request.resolver_match.url_name == 'profile' %}class="nav-link dropdown-toggle active"{% else %}class="nav-link dropdown-toggle"{% endif %} href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a {% if request.resolver_match.url_name == 'profile' %}class="nav-link dropdown-toggle active" style="color: #9C68AD; font-weight: 700;"{% else %}class="nav-link dropdown-toggle"{% endif %} href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Profile
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <ul class="dropdown-menu dropdown-menu-dark bg-dark" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="{% url 'profile' %}">Your Profile</a></li>
                   <li><a class="dropdown-item" href="{% url 'edit_user' %}">Settings</a></li>
                   <li><hr class="dropdown-divider"></li>
@@ -49,7 +68,7 @@
             </ul>
             {% if user.is_authenticated %}
               <span class="navbar-text login-margin">
-                Logged in as <span class="text-white">{{user}}</span>
+                Logged in as <span class="text" style="color: #9C68AD; font-weight: 600">{{user}}</span>
               </span>
             {% endif %}
             <form class="d-flex" role="search" method="get" action="{% url 'search' %}">

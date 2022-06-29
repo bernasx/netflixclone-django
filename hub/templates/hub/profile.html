@@ -3,6 +3,23 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'hub/css/profile.css' %}" type="text/css">
+<style>
+    .btn-primary {
+        --bs-btn-hover-bg: #884A9D;
+        --bs-btn-bg: #9C68AD;
+        --bs-btn-border-color: #9C68AD;
+        --bs-btn-hover-border-color: #884A9D;
+    }
+    .list-group-item {
+        background-color: #211E2B;
+        color: white;
+    }
+    .list-group {
+        --bs-list-group-action-hover-color: white;
+        --bs-list-group-action-hover-bg: #884a9d;
+    }
+</style>
+
 <div class='custom-container'>
     <img class="banner img-fluid" src="{{ banner }}" />
     <div class="pfp-username-container">
